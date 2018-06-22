@@ -1,33 +1,33 @@
 import React , { Component } from 'react';
-import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Route } from 'react-router-dom'
 import SearchBook from './SearchBook.js'
-import * as BooksAPI from './BooksAPI'
 
 class StartTemplate extends Component {
 
     state = {
 
-        id: '',
-        value: '',
-        shelf: ''
+        shelf: '',
+        currentlyReading: 'currentlyReading',
+        wantToRead: 'wantToRead',
+        read: 'read'
 
     }
-    
+
+    handleChange(e, b) {
+
+        this.setState({
+
+            shelf:
+                e.target.value
+
+        }, () =>{ this.props.moveBook(b, this.state.shelf)})
+
+    }
+
     render() {
 
-        const { allBooks, moveBook } = this.props
-
-     /*   const currentlyReading = allBooks.filter(function (user) {
-            return user.shelf === 'currentlyReading';
-        });
-        const read = allBooks.filter(function (user) {
-            return user.shelf === 'read';
-        });
-        const wantToRead = allBooks.filter(function (user) {
-            return user.shelf === 'wantToRead';
-        });*/
+        const { allBooks } = this.props
 
         return (
             <div>
@@ -54,14 +54,14 @@ class StartTemplate extends Component {
                                                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${b.imageLinks.thumbnail})`}}></div>
                                                                 <div className="book-shelf-changer">
 
-                                                                    <select onChange=
+                                                                    <select value={this.state.currentlyReading} onChange=
 
                                                                     {
-                                                                        (e) => this.setState({ shelf: e.target.value })
+                                                                       e => this.handleChange(e, b)
 
-                                                                    } defaultValue>
+                                                                    } >
                                                                         <option value="move" disabled>Move to...</option>
-                                                                        <option value="currentlyReading" selected="selected">Currently Reading</option>
+                                                                        <option value="currentlyReading">Currently Reading</option>
                                                                         <option value="wantToRead">Want to Read</option>
                                                                         <option value="read" >Read</option>
                                                                         <option value="none">None</option>
@@ -71,11 +71,6 @@ class StartTemplate extends Component {
                                                         <div className="book-title">{b.title}</div>
                                                         <div className="book-authors">{b.authors}</div>
 
-                                                        <button
-                                                            onClick={() => moveBook(b, this.state.shelf)}
-                                                           >
-                                                            Move
-                                                        </button>
                                                     </div>
                                                 </li>
                                             ))
@@ -99,15 +94,15 @@ class StartTemplate extends Component {
                                                 <div className="book-top">
                                                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${b.imageLinks.thumbnail})`}}></div>
                                                     <div className="book-shelf-changer">
-                                                        <select onChange=
+                                                        <select value={this.state.wantToRead} onChange=
 
                                                                     {
-                                                                         (e) => this.setState({ shelf: e.target.value })
+                                                                         e => this.handleChange(e, b)
 
                                                                     }>
                                                             <option value="move" disabled>Move to...</option>
                                                             <option value="currentlyReading">Currently Reading</option>
-                                                            <option value="wantToRead" selected="selected">Want to Read</option>
+                                                            <option value="wantToRead">Want to Read</option>
                                                             <option value="read">Read</option>
                                                             <option value="none">None</option>
                                                         </select>
@@ -115,12 +110,7 @@ class StartTemplate extends Component {
                                                 </div>
                                                 <div className="book-title">{b.title}</div>
                                                 <div className="book-authors">{b.authors}</div>
-                                                <button
-                                                    onClick={() => moveBook(b, this.state.shelf)}
-                                                   >
 
-                                                    Move
-                                                </button>
                                             </div>
                                         </li>
 
@@ -143,27 +133,23 @@ class StartTemplate extends Component {
                                                         <div className="book-top">
                                                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${b.imageLinks.thumbnail})`}}></div>
                                                             <div className="book-shelf-changer">
-                                                                <select onChange=
+                                                                <select value={this.state.read} onChange=
 
                                                                         {
-                                                                             (e) => this.setState({ shelf: e.target.value })
+                                                                           e => this.handleChange(e, b)
 
                                                                         }>
                                                                     <option value="move" disabled>Move to...</option>
                                                                     <option value="currentlyReading">Currently Reading</option>
                                                                     <option value="wantToRead">Want to Read</option>
-                                                                    <option value="read" selected="selected">Read</option>
+                                                                    <option value="read">Read</option>
                                                                     <option value="none">None</option>
                                                                 </select>
                                                             </div>
                                                         </div>
                                                         <div className="book-title">{b.title}</div>
                                                         <div className="book-authors">{b.authors}</div>
-                                                        <button
-                                                            onClick={() => moveBook(b, this.state.shelf)}
-                                                          >
-                                                            Move
-                                                        </button>
+
                                                     </div>
 
                                                 </li>

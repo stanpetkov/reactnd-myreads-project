@@ -1,13 +1,15 @@
 import React , { Component } from 'react';
-import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import * as BooksAPI from './BooksAPI'
 
 class SearchBook extends Component {
 
     state = {
         query: '',
-        value: ''
+        value: '',
+        shelf: '',
+        currentlyReading: 'currentlyReading',
+        wantToRead: 'wantToRead',
+        read: 'read'
     }
 
     updateQuery = (query) => {
@@ -22,6 +24,17 @@ class SearchBook extends Component {
         this.setState(() => ({
             value: query.trim()
         }))
+    }
+
+    handleChange(e, b) {
+
+        this.setState({
+
+            shelf:
+            e.target.value
+
+        }, () =>{ this.props.moveBook(b, this.state.shelf)})
+
     }
 
     render() {
@@ -57,7 +70,7 @@ class SearchBook extends Component {
 
                         (event) => this.updateQuery(event.target.value)
 
-                        }
+                    }
                 />
                     <div className="search-books-input-wrapper">
                         {
@@ -75,9 +88,9 @@ class SearchBook extends Component {
                                                         <div className="book-top">
                                                             <div className="book-cover" style={{ width: 128, height: 193,       backgroundImage: `url(${b.imageLinks.thumbnail})`}}></div>
                                                             <div className="book-shelf-changer">
-                                                                <select value={this.state.value} onChange={
+                                                                <select value={this.state.shelf} onChange={
 
-                                                                (event) => this.updateValue(event.target.value)
+                                                                e => this.handleChange(e, b)
 
                                                                 }>
                                                                     <option value="move" disabled>Move to...</option>
@@ -87,7 +100,6 @@ class SearchBook extends Component {
                                                                 </select>
                                                             </div>
                                                         </div>
-
                                                         <div className="book-title">{b.title}</div>
                                                         <div className="book-authors">{b.authors}</div>
                                                     </div>

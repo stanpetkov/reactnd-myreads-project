@@ -3,7 +3,6 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 import SearchBook from './SearchBook.js'
 import StartTemplate from './StartTemplate.js'
-import { Link } from 'react-router-dom'
 import { Route } from 'react-router-dom'
 
 class App extends React.Component {
@@ -19,24 +18,32 @@ class App extends React.Component {
     componentDidMount() {
 
         BooksAPI.getAll()
+
             .then( (allBooks) => {
 
                 this.setState( () => ({
                     allBooks
                 }))
+
             })
     }
 
     moveBook = (b, shelf) => {
 
         BooksAPI.update(b, shelf)
-            .then( (allBooksObj) => {
 
-                this.setState( () => ({
-                    allBooksObj
-                }))
+            .then( (allBooks) => {
+
+                BooksAPI.getAll()
+
+                    .then( (allBooks) => {
+
+                        this.setState( () => ({
+                            allBooks
+                        }))
+
+                    })
             })
-
     }
 
     render() {
@@ -44,19 +51,17 @@ class App extends React.Component {
         return (
 
             <div>
-
                 <Route exact path="/" render={ () => (
-
                    <StartTemplate
                    allBooks= { this.state.allBooks }
                    moveBook= { this.moveBook }/>
-            )}/>
+                )}/>
 
                 <Route exact path="/search" render={ () => (
-
                    <SearchBook
-                   allBooks= { this.state.allBooks }/>
-            )}/>
+                   allBooks= { this.state.allBooks }
+                   moveBook= { this.moveBook }/>
+                )}/>
             </div>
 
         )
