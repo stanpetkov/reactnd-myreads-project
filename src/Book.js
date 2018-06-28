@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Route } from 'react-router-dom'
 import SearchBook from './SearchBook.js'
 
-class StartTemplate extends Component {
+class Book extends Component {
 
     state = {
 
@@ -18,10 +18,9 @@ class StartTemplate extends Component {
 
         this.setState({
 
-            shelf:
-                e.target.value
+            shelf: e.target.value
 
-        }, () =>{ this.props.moveBook(b, this.state.shelf)})
+        }, () => { this.props.moveBook(b, this.state.shelf) } )
 
     }
 
@@ -97,6 +96,7 @@ class StartTemplate extends Component {
                                                         <select value={this.state.wantToRead} onChange=
 
                                                                     {
+
                                                                          e => this.handleChange(e, b)
 
                                                                     }>
@@ -184,4 +184,4 @@ class StartTemplate extends Component {
 
 }
 
-export default StartTemplate
+export default Book
