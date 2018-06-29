@@ -6,8 +6,7 @@ import Title from './Title.js'
 import BookShelf from './BookShelf.js'
 
 class Book extends Component {
-
-
+    
     render() {
 
         const { allBooks, moveBook } = this.props
@@ -18,16 +17,17 @@ class Book extends Component {
             <div className="app">
                 <div className="list-books">
 
-                    <Title />
+                   <Title />
                     
                     <BookShelf 
                         allBooks={ allBooks }
-                        moveBook = { moveBook }  />
+                        moveBook = { moveBook }    />
                     
                     <div className="open-search">
+                        
                         <Route path="/search" render={ () => (
-                    <SearchBook />
-          )} />
+                            <SearchBook />
+                        )} />
 
                     <Link
                         to="/search"
@@ -43,6 +43,7 @@ class Book extends Component {
 
         )
     }
+
 
 }
 
