@@ -2,7 +2,7 @@ import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import SearchBook from './SearchBook.js'
-import StartTemplate from './StartTemplate.js'
+import Book from './Book.js'
 import { Route } from 'react-router-dom'
 
 class App extends React.Component {
@@ -10,8 +10,7 @@ class App extends React.Component {
     state = {
 
         id: '',
-        allBooks: [],
-        allBooksObj: {}
+        allBooks: []
 
     }
 
@@ -52,7 +51,7 @@ class App extends React.Component {
 
             <div>
                 <Route exact path="/" render={ () => (
-                   <StartTemplate
+                   <Book
                    allBooks= { this.state.allBooks }
                    moveBook= { this.moveBook }/>
                 )}/>
