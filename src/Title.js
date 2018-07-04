@@ -1,18 +1,10 @@
-import React , { Component } from 'react';
+import React from 'react';
 
-class Title extends Component {
+function Title() {
 
-    render () {
-
-        return (
-
-            <div className="list-books-title">
+    return  <div className="list-books-title">
                 <h1>MyReads Project</h1>
             </div>
-
-        )
-    }
-
 }
 
 export default Title

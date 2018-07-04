@@ -53,7 +53,8 @@ class App extends React.Component {
                 <Route exact path="/" render={ () => (
                    <Book
                    allBooks= { this.state.allBooks }
-                   moveBook= { this.moveBook }/>
+                   moveBook= { this.moveBook }
+                  />
                 )}/>
 
                 <Route exact path="/search" render={ () => (

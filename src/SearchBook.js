@@ -5,16 +5,18 @@ import * as BooksAPI from './BooksAPI'
 class SearchBook extends Component {
 
     state = {
+
         query: '',
-        value: '',
         shelf: 'none',
-        books: []
+        books: this.props.allBooks
     }
 
     updateQuery = (query) => {
 
         this.setState(() => ({
+
             query: query.trim()
+
         }))
 
         if (query) {
@@ -27,15 +29,7 @@ class SearchBook extends Component {
                     this.setState({ books: books })
                 }
                 
-            }).then(books => BooksAPI.getAll()
-
-                .then( (books) => {
-
-                    this.setState( () => ({
-                        books
-                    }))
-
-                }))
+            })
         } else {
             this.setState( { books: [] })
         }
@@ -73,52 +67,51 @@ class SearchBook extends Component {
                     type="text"
                     placeholder="Search by Title or Author"
                     value={ query }
-                    onChange={
+                    onChange= {
 
                         (event) => this.updateQuery(event.target.value)
 
                     }
                 />
                     <div className="search-books-input-wrapper">
-                        {
+
                             <div className="bookshelf">
                                 <div className="bookshelf-books">
                                     <ol className="books-grid">
                                         {
-                                            books.map( (b) => (
+                                            query && (  books.map( (b) => (
 
-                                                <li key={b.id}>
-
+                                            <li key={ b.id }>
+                                               
                                                     <div className="book">
                                                         <div className="book-top">
                                                             <div className="book-cover" style={{ width: 128, height: 193,backgroundImage: `url(${ b.imageLinks ? b.imageLinks.thumbnail : noImage
 })`}}></div>
                                                             <div className="book-shelf-changer">
 
-                                                                <select value={b.shelf} onChange={
+                                                                <select value={ b.shelf } onChange={
 
                                                                     e => this.handleChange(e, b)
 
                                                                 }>
                                                                     <option value="move" disabled>Move to...</option>
+                                                                    <option value="none">None</option>
                                                                     <option value="currentlyReading">Currently Reading</option>
                                                                     <option value="wantToRead">Want to Read</option>
                                                                     <option value="read">Read</option>
-                                                                    <option value="none">None</option>
+
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                        <div className="book-title">{b.title}</div>
-                                                        <div className="book-authors">{b.authors}</div>
+                                                        <div className="book-title">{ b.title }</div>
+                                                        <div className="book-authors">{ b.authors }</div>
                                                     </div>
                                                 </li>
                                             )
-                                        )}
+                                        ))}
                                     </ol>
                                 </div>
                             </div>
-                        }
-
                     </div>
             </div>
                 </div>
